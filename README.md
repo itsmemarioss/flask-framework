@@ -39,3 +39,21 @@ A [finished example](https://lemurian.herokuapp.com) that demonstrates some basi
   and [examples](https://github.com/bokeh/bokeh/tree/master/examples/embed).
 - Make the plot visible on your website through embedded HTML or other methods - this is where Flask comes in to manage the interactivity and display the desired content.
 - Some good references for Flask: [This article](https://realpython.com/blog/python/python-web-applications-with-flask-part-i/), especially the links in "Starting off", and [this tutorial](https://github.com/bev-a-tron/MyFlaskTutorial).
+
+## How to run
+
+Create the environment
+
+    python3 -m venv venv
+
+Activate the environment
+
+    venv\Scripts\activate
+
+Install  dependencies 
+
+    pip install flask simplejson requests
+
+Run app
+
+    flask run
