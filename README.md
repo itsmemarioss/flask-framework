@@ -52,7 +52,7 @@ Activate the environment
 
 Install  dependencies 
 
-    pip install flask simplejson requests
+    pip install flask simplejson requests bokeh datetime
 
 Run app
 
