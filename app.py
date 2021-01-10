@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect
 import simplejson as json
 import requests
+import datetime
+from bokeh.plotting import figure, output_file, show
+from bokeh.resources import CDN
+from bokeh.embed import file_html
 
 app = Flask(__name__)
 
@@ -24,14 +28,28 @@ def print_symbol():
 
   #request the json and load it
   page = requests.get(url)
-  obj = json.loads(page.content)
+  json_var = json.loads(page.content)
 
-  #after loading json into a variable it will create a dictionary so you can add the properties of the json by name
-  print(obj.__class__) #dict
+#---------------------------
+  date_time_str = '2018-06-29 08:15:27.243860'
+  date_time_obj = datetime.datetime.fromisoformat(date_time_str)
+  #date_time_obj
+  JV_Date = [datetime.datetime.fromisoformat(date) for date in json_var['Time Series (Daily)'].keys()]
+  JV_Date = JV_Date[0:22]
+  JV_Close_Price = list(json_var['Time Series (Daily)'].values())
+  JV_Close = [float(row['5. adjusted close']) for row in JV_Close_Price]
+  JV_Close = JV_Close[0:22]
 
-  #return only the dates with the prices part
-  #from now on you need to clean the data to use it in pandas. I suppose ;)
-  return obj["Time Series (Daily)"]
+  # create a new plot with a title and axis labels
+  p = figure(title="Daily stock adjusted close price", x_axis_label='Date', y_axis_label='Adj. Close Price', x_axis_type='datetime')
+
+  # add a line renderer with legend and line thickness
+  p.line(JV_Date, JV_Close, line_width=2)
+
+  html = file_html(p, CDN, symbol + " - Daily stock adjusted close price")
+
+  return html
+  
 
 if __name__ == '__main__':
   app.run(port=33507)
