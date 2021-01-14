@@ -1,2 +1,6 @@
 gunicorn==19.9.0
 requests==2.20.0
+simplejson==3.17.2
+bokeh==2.2.3
+datatime==4.3
+flask==1.1.2
